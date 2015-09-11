@@ -28,14 +28,17 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 import static java.lang.String.*;
 
 public class Java1 extends Activity {
 
     ArrayList<String> dataArray = new ArrayList<String>();
-    int sum = 0;
+    int sum;
     int dataBlock = 100;
+    int output;
     String finalData = "";
     AlertDialog.Builder selectAlert;
 
@@ -50,27 +53,70 @@ public class Java1 extends Activity {
         loadHandler();
     }
 
-    public int math(){
-        for (int i = 0; i < dataArray.size(); i++) {
-            sum += dataArray.get(i).length();
-            //Log.d("Length: ", String.valueOf(dataList.get(i).length()));
-            //Log.d("Sum: ", String.valueOf((sum)));
+//    public int math(){
+//        for (int i = 0; i < dataArray.size(); i++) {
+//            sum += dataArray.get(i).length();
+//            //Log.d("Length: ", String.valueOf(dataList.get(i).length()));
+//            //Log.d("Sum: ", String.valueOf((sum)));
+//        }
+//        return sum;
+//    }
+
+   public int median() {
+        ArrayList<Integer> intArray = new ArrayList<Integer>();
+        if (dataArray.size()==0){
+            return 0;
+        } else {
+            int x;
+            //Create intArray from dataArray
+            for (int i = 0; i < dataArray.size(); i++) {
+                intArray.add(dataArray.get(i).length());
+            }
+            //Put array in order
+            Collections.sort(intArray);
+            for(int counter: intArray){
+                System.out.println(counter);
+            }
+
+            if (intArray.size()%2==0) {
+                //Even
+                x = intArray.size()/2;
+                //System.out.println("X = " + x);
+                output = ((intArray.get(x)+intArray.get(x-1))/2);
+                System.out.println("MedianE : " + output);
+                return output;//intArray.get(x);
+            } else {
+                //Odd
+                x = (intArray.size()/2);
+                //System.out.println("X = " + String.valueOf(dataArray.get(intArray.get(x))));
+                output = intArray.get(x);
+                System.out.println("MedianO = " + output);
+                return output;//intArray.get(x);
+            }
         }
-        return sum;
     }
 
     private void updateText() {
         //Update text to display correct values
         TextView dataCount = (TextView) findViewById(R.id.dataCounter);
         TextView dataLength = (TextView) findViewById(R.id.dataLength);
-        dataCount.setText("Total Data Entries: " + String.valueOf(dataArray.size()));
-        math(); //Get Sum
-        dataLength.setText("Average Length: " + String.valueOf(sum / dataArray.size()));
-        sum = 0; //Reset Sum
+
+        if (dataArray.size() == 0){
+            dataLength.setText("Median Length: 0");
+            dataCount.setText("Total Data Entries: 0");
+        } else {
+            //Get Sum
+            median();
+            //math();
+            dataLength.setText("Median Length: " + String.valueOf(output));
+            dataCount.setText("Total Data Entries: " + String.valueOf(dataArray.size()));
+        }
+            sum = 0; //Reset Sum
     }
 
     private void updateList() {
         //Update ListView
+        saveHandler();
         final ListView dataList = (ListView) findViewById(R.id.listView);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataArray);
         dataList.setAdapter(adapter);
@@ -78,7 +124,7 @@ public class Java1 extends Activity {
         dataList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
                 // Log.d("You selected: ", String.valueOf(parent.getItemAtPosition(position)));
                 selectAlert.setTitle("Hello!");
                 selectAlert.setMessage("You have selected: " + String.valueOf(parent.getItemAtPosition(position)));
@@ -88,6 +134,17 @@ public class Java1 extends Activity {
                         dialog.cancel();
                     }
                 });
+                selectAlert.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Log.d("You selected: ", String.valueOf(position));
+                        Toast.makeText(getBaseContext(), "Removed: " + String.valueOf(parent.getItemAtPosition(position)), Toast.LENGTH_LONG).show();
+                        dataArray.remove(position);
+                        updateList();
+                        updateText();
+                        dialog.cancel();
+                    }
+                });
+
                 AlertDialog dialog = selectAlert.create();
                 dialog.show();
             }
@@ -95,7 +152,6 @@ public class Java1 extends Activity {
     }
 
     public void loadHandler() {
-
         try {
             FileInputStream getData = openFileInput("text.txt");
             InputStreamReader inputData = new InputStreamReader(getData);
@@ -114,12 +170,16 @@ public class Java1 extends Activity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        String[] breakup = finalData.split("\n");
-        for (int i = 0; i <breakup.length; i++) {
-            dataArray.add(breakup[i]);
+            String[] breakup = finalData.split("\n");
+            for (int i = 0; i <breakup.length; i++) {
+                dataArray.add(breakup[i]);
+            }
+        if (dataArray.get(0).equals("")) {
+            dataArray.clear();
+        } else {
+            updateText();
+            updateList();
         }
-        updateText();
-        updateList();
         //Log.d("HELLO : ", String.valueOf(breakup.length));
     }
 
@@ -167,10 +227,11 @@ public class Java1 extends Activity {
         Editable addDataText = addData.getText();
         //Add Text to Array
         dataArray.add(String.valueOf(addDataText));
+        Toast.makeText(getBaseContext(), "Added: " + addDataText, Toast.LENGTH_LONG).show();
         updateText();
         updateList();
-        saveHandler();
         addData.setText(""); //Clear EditText
+
     }
 
     @Override

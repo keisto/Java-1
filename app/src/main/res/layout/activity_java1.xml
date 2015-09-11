@@ -1,75 +1,76 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Java1">
+    android:layout_height="match_parent" android:orientation="vertical"
+    tools:context=".LinearLayout">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView android:text="@string/hello_world"
         android:id="@+id/header"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="6dip"
         android:textAlignment="center"
         android:textSize="42sp"
         android:textStyle="bold"
         android:phoneNumber="true"
         android:editable="false" />
 
-    <Button
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Median Length: 0"
+        android:id="@+id/dataCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add"
-        android:id="@+id/addButton"
-        android:onClick="clickHandler"
-        android:background="@android:drawable/btn_default"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/header"
-        android:layout_alignEnd="@+id/header" />
+        android:layout_gravity="center"
+        android:layout_marginRight="6dip"
+        android:padding="10dp"
+        android:textAlignment="center" />
+
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Total Data Entries: 0"
+        android:layout_gravity="center"
+        android:id="@+id/dataLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="6dip"
+        android:padding="10dp"
+        android:textAlignment="center" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/editText"
-        android:layout_alignTop="@+id/addButton"
-        android:layout_toLeftOf="@+id/addButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/addButton"
         android:inputType="text|phone|numberPassword|textCapWords|textCapSentences|number|date|numberSigned|time|textShortMessage|textAutoComplete|textPersonName|datetime|textAutoCorrect"
         android:autoText="false"
-        android:hint="Enter Data" />
+        android:hint="Enter Data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="6dip"
+        android:padding="10dp" />
+
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Add"
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="6dip"
+        android:onClick="clickHandler"
+        android:textColor="#1398ff"
+        android:editable="false"
+        android:clickable="true"
+        android:background="#fafafa"
+        android:textStyle="bold"
+        android:inputType="none"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal" />
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true"
-        android:choiceMode="none" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="6dip"
+        android:layout_gravity="center"
+        android:choiceMode="none"
+        android:longClickable="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Average Length:  "
-        android:id="@+id/dataCounter"
-        android:textAlignment="center"
-        android:layout_below="@+id/dataLength"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Total Data Entries:  "
-        android:id="@+id/dataLength"
-        android:layout_marginTop="40dp"
-        android:textAlignment="center"
-        android:layout_below="@+id/header"
-        android:layout_centerHorizontal="true" />
-
-</RelativeLayout>
+</LinearLayout>
