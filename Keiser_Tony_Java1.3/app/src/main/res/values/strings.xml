@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Keiser_Tony_Java1.3</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="mobileos">
+        <item>Android</item>
+        <item>Blackberry</item>
+        <item>iOS</item>
+        <item>Windows Phone</item>
+    </string-array>
+</resources>
