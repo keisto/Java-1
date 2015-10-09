@@ -3,7 +3,9 @@ package xyz.y_not.keiser_tony_java_1;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Java1_w1 extends Activity {
     // Item Call List
@@ -27,7 +31,7 @@ public class Java1_w1 extends Activity {
     Button searchButton;
     ArrayList<String> dataCollection;
     AlertDialog.Builder getAlert;
-    Double dataLength;
+    Double results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,54 +55,73 @@ public class Java1_w1 extends Activity {
     // Search data onClick (Check if data has any input)
     public void onSearchHandler(View view){ // Do something onClick
         if ((textSearch.getText().toString().equals(""))){
-            getAlert.setTitle("Error!");
+            getAlert.setTitle(Html.fromHtml("<b>" +
+                    getResources().getString(R.string.error_string) + "!" + "</b>"));
             getAlert.setCancelable(true);
-            getAlert.setMessage("You must enter a value.");
-            getAlert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
+            getAlert.setMessage(Html.fromHtml("<b>" +
+                    getResources().getString(R.string.value_alert) + "." + "</b>"));
+            getAlert.setPositiveButton(Html.fromHtml("<b>" +
+                            getResources().getString(R.string.okay_string) + "</b>"),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
             AlertDialog dialog = getAlert.create();
             dialog.show();
         // If ID is out of range
         } else if (Integer.parseInt(textSearch.getText().toString())>dataCollection.size()){
-            getAlert.setTitle("Error!");
+            getAlert.setTitle(Html.fromHtml("<b>" +
+                    getResources().getString(R.string.error_string) + "!" + "</b>"));
             getAlert.setCancelable(true);
-            getAlert.setMessage("ID is out out of range.");
-            getAlert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
+            getAlert.setMessage(Html.fromHtml("<b>" +
+                    getResources().getString(R.string.range_alert) + "." + "</b>"));
+            getAlert.setPositiveButton(Html.fromHtml("<b>" +
+                            getResources().getString(R.string.okay_string) + "</b>"),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
             AlertDialog dialog = getAlert.create();
             dialog.show();
         } else {
             // If dataCollection not empty... search dataCollection
             if (dataCollection.size() != 0) {
 
-                getAlert.setTitle("Search Result:");
+                getAlert.setTitle(Html.fromHtml("<b>" +
+                        getResources().getString(R.string.search_alert) + ":" + "</b>"));
                 getAlert.setCancelable(true);
-                getAlert.setMessage("You found: " +
+                getAlert.setMessage(Html.fromHtml("<b>" +
+                        getResources().getString(R.string.you_found) + ": " +
                         // Subtracting 1 so array count starts at 1 in lieu of 0)
-                        dataCollection.get(Integer.parseInt(textSearch.getText().toString()) - 1));
-                getAlert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                        dataCollection.get(Integer.parseInt(textSearch.getText().toString()) - 1) +
+                        "</b>"));
+                getAlert.setPositiveButton(Html.fromHtml("<b>" +
+                                getResources().getString(R.string.okay_string) + "</b>"),
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
                 AlertDialog dialog = getAlert.create();
                 dialog.show();
+
                 // Error due to no data in dataCollection
             } else {
-                getAlert.setTitle("Error!");
+                getAlert.setTitle(Html.fromHtml("<b>" +
+                        getResources().getString(R.string.error_string) + "!" + "</b>"));
                 getAlert.setCancelable(true);
-                getAlert.setMessage("No data has been collected!");
-                getAlert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                getAlert.setMessage(Html.fromHtml("<b>" +
+                        getResources().getString(R.string.no_data) + "!" + "</b>"));
+                getAlert.setPositiveButton(Html.fromHtml("<b>" +
+                        getResources().getString(R.string.okay_string)+ "</b>"),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
                 AlertDialog dialog = getAlert.create();
                 dialog.show();
             }
@@ -111,54 +134,74 @@ public class Java1_w1 extends Activity {
     public void onAddHandler(View view){ // Do something onClick
         if (textAdd.getText().toString().equals("") ||
                 textAdd.getText().toString().trim().equals("") ) { // Alert empty field
-            getAlert.setTitle("Error!");
+            getAlert.setTitle(Html.fromHtml("<b>" +
+                    getResources().getString(R.string.error_string) + "!" + "</b>"));
             getAlert.setCancelable(true);
-            getAlert.setMessage("You must enter text to add.");
-            getAlert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
+            getAlert.setMessage(Html.fromHtml("<b>" +
+                    getResources().getString(R.string.add_text) + "." + "</b>"));
+                    getAlert.setPositiveButton(Html.fromHtml("<b>" +
+                                    getResources().getString(R.string.okay_string) + "</b>"),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
             AlertDialog dialog = getAlert.create();
             dialog.show();
         } else { // Add text to dataCollection
             dataCollection.add(textAdd.getText().toString());
-            recentAdd.setText("Recently added: " + textAdd.getText().toString() +
-                    ", ID: " + dataCollection.size() + ", Length: " +
-                    dataCollection.get(dataCollection.size()-1).length());
+            recentAdd.setText(getResources().getString(R.string.recent_add) + ": " +
+                    textAdd.getText().toString() +
+                    ", ID: " + dataCollection.size() + ", " +
+                    getResources().getString(R.string.recent_length) + ": " +
+                            dataCollection.get(dataCollection.size() - 1).length());
             textAdd.setText(""); // Reset EditText field
 
             //Update dataCollection Stats
-            averageLength();
-            textLength.setText("Average Length: " + dataLength);
-            textCount.setText("Entry Count: " + dataCollection.size());
+            getMedian();
+            textLength.setText(getResources().getString(R.string.median_string) +
+                    ": " + results);
+            textCount.setText(getResources().getString(R.string.count_string) +
+                    ": " + dataCollection.size());
 
             //Update Hint
             if (dataCollection.size()==1){
-                updateAdd.setText("Enter an ID of 1");
+                updateAdd.setText(getResources().getString(R.string.enter_info));
             } else if (dataCollection.size()>1){
-                updateAdd.setText("Enter an ID of 1 - " + dataCollection.size());
+                updateAdd.setText(getResources().getString(R.string.enter_info) +
+                        " - " + dataCollection.size());
             } else {
                 return; //Should never be called, but just in case
             }
         }
     }
 
-    public double averageLength() {
-        dataLength = 0.0; //Set to 0 to start to prevent adding previous lengths again
-        if (dataCollection.size()==1){
-            dataLength = Double.valueOf(dataCollection.get(0).length());
-        }
-        else if (dataCollection.size() > 1) {
-            for (int i = 0; i < dataCollection.size(); i++) {
-                dataLength += dataCollection.get(i).length();
-            }
-            dataLength = dataLength / dataCollection.size();
+    public double getMedian() {
+        ArrayList<Integer> medianArray = new ArrayList<Integer>();
+        if (dataCollection.size() == 0) {
+            return 0;
         } else {
-            dataLength = 0.0;
+            int x;
+            //Create an array of Ints
+            for (int i = 0; i < dataCollection.size(); i++) {
+                medianArray.add(dataCollection.get(i).length());
+            }
+            //Order array
+            Collections.sort(medianArray);
 
+            if (medianArray.size() % 2 == 0) {
+                //Even
+                x = medianArray.size() / 2;
+                results = (Double.valueOf(medianArray.get(x) + medianArray.get(x - 1)) / 2);
+
+                return results;
+            } else {
+                //Odd
+                x = (medianArray.size() / 2);
+                results = Double.valueOf(medianArray.get(x));
+                return results;
+            }
         }
-        return dataLength;
     }
 }
 
