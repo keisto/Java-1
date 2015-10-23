@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".iTuneSearch">
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/getText"
+        android:layout_gravity="center"
+        android:layout_below="@+id/releaseText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/getResults"
+        android:layout_toStartOf="@+id/getResults"
+        android:layout_marginTop="12dp"
+        android:hint="What are you looking for?" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GET"
+        android:id="@+id/getResults"
+        android:layout_gravity="center"
+        android:onClick="onGetJson"
+        android:layout_above="@+id/listResults"
+        android:layout_alignRight="@+id/listResults"
+        android:layout_alignEnd="@+id/listResults" />
+
+    <ImageView
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:id="@+id/artistImage"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/artistText"
+        android:text="ArtistText"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/artistImage"
+        android:layout_toEndOf="@+id/artistImage"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="TrackText"
+        android:id="@+id/trackText"
+        android:layout_below="@+id/artistText"
+        android:layout_alignLeft="@+id/artistText"
+        android:layout_alignStart="@+id/artistText"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="AlbumText"
+        android:id="@+id/albumText"
+        android:layout_below="@+id/trackText"
+        android:layout_toRightOf="@+id/artistImage"
+        android:layout_toEndOf="@+id/artistImage"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="ReleaseText"
+        android:id="@+id/releaseText"
+        android:layout_below="@+id/albumText"
+        android:layout_alignLeft="@+id/albumText"
+        android:layout_alignStart="@+id/albumText"
+        android:layout_marginBottom="5dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listResults"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/getText" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        android:layout_alignRight="@+id/listResults"
+        android:layout_alignEnd="@+id/listResults"
+        android:layout_alignTop="@+id/listResults"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:indeterminate="false" />
+
+</RelativeLayout>
